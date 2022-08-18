@@ -1,10 +1,10 @@
 apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
-  name: adservice
+  name: frontend
 build:
   artifacts:
-  - image: adservice
+  - image: frontend
     context: .
     docker:
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@ build:
 deploy:
   kubectl:
     manifests:
-    - ../../kubernetes-manifests/adservice.yaml
+    - ../../kubernetes-manifests/frontend.yaml
 profiles:
 # "gcb" profile allows building and pushing the images
 # on Google Container Builder without requiring docker
@@ -31,5 +31,5 @@ profiles:
       timeout: 4000s
 portForward:
 - resourceType: deployment
-  resourceName: adservice
-  port: 9555
+  resourceName: frontend
+  port: 8080 
