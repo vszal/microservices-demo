@@ -13,7 +13,7 @@ build:
 deploy:
   kubectl:
     manifests:
-    - ../../kubernetes-manifests/frontend.yaml
+    - k8s/frontend.yaml
 profiles:
 # "gcb" profile allows building and pushing the images
 # on Google Container Builder without requiring docker

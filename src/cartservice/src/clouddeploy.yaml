@@ -1,0 +1,29 @@
+# replace "vsz-demo" in the three targets below with your actual project(s)
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: cartservice-boutique-pipeline
+description: Online Boutique CD pipeline
+serialPipeline:
+ stages:
+ - targetId: test-boutique
+ - targetId: prod-boutique
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: test-boutique
+description: test cluster
+gke:
+  cluster: projects/vsz-demo/locations/us-central1/clusters/test-boutique
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: prod-boutique
+description: prod cluster
+requireApproval: true
+gke:
+  cluster: projects/vsz-demo/locations/us-central1/clusters/prod-boutique
