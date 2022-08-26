@@ -22,7 +22,7 @@
 # USAGE:
 # The release ID must be incremented/unique for each run:
 # Example invocation:
-# `gcloud builds submit --config=cloudbuild_cd.yaml --substitutions=_REL_ID=UNIQUE.`
+# gcloud builds submit --config=cloudbuild.yaml --substitutions=_REL_ID=UNIQUE
 # where UNIQUE is different for each release
 
 steps:
@@ -42,8 +42,9 @@ steps:
       "--region", "us-central1",
       "--build-artifacts", "/workspace/artifacts.json"
     ]
-
-# Add more power, and more time, for heavy Skaffold build
+images:
+- us-central1-docker.pkg.dev/${PROJECT_ID}/onlineboutique/adservice:latest
+# Add more power for heavy Skaffold build
 timeout: '3600s'
 options:
   machineType: 'N1_HIGHCPU_8'
