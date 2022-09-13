@@ -43,9 +43,9 @@ steps:
       "--build-artifacts", "/workspace/artifacts.json"
     ]
 images:
-- us-central1-docker.pkg.dev/${PROJECT_ID}/onlineboutique/adservice:latest
+- us-central1-docker.pkg.dev/${PROJECT_ID}/onlineboutique/adservice
 # Add more power for heavy Skaffold build
-timeout: '3600s'
 options:
+  requestedVerifyOption: VERIFIED
   machineType: 'N1_HIGHCPU_8'
   
