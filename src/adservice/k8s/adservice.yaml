@@ -28,19 +28,19 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
       securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
       containers:
       - name: server
         securityContext:
-          allowPrivilegeEscalation: false
+          allowPrivilegeEscalation: true
           capabilities:
-            drop:
-              - all
+            add:
+              - CHOWN
+              - KILL
           privileged: false
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
         image: adservice
         ports:
         - containerPort: 9555
