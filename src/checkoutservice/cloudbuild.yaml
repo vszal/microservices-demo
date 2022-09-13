@@ -1,0 +1,50 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This configuration file is used to build and deploy the app into a
+# GKE cluster using Google Cloud Build and Google Cloud Deploy.
+#
+# PREREQUISITES:
+# - Cloud Build service account must have roles:  "Cloud Deploy Releaser", "Service Account User"
+# - Compute service account must have roles: "Kubernetes Engine Developer", "Cloud Deploy Runner"
+
+# USAGE:
+# The release ID must be incremented/unique for each run:
+# Example invocation:
+# gcloud builds submit --config=cloudbuild.yaml --substitutions=_REL_ID=UNIQUE
+# where UNIQUE is different for each release
+
+steps:
+- name: gcr.io/k8s-skaffold/skaffold
+  args:
+    - skaffold
+    - build
+    - '--interactive=false'
+    - '--file-output=/workspace/artifacts.json'
+    - '--default-repo=us-central1-docker.pkg.dev/${PROJECT_ID}/onlineboutique'
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+      "deploy", "releases", "create", "rel-${_REL_ID}",
+      "--delivery-pipeline", "checkoutservice-boutique-pipeline",
+      "--region", "us-central1",
+      "--build-artifacts", "/workspace/artifacts.json"
+    ]
+images:
+- us-central1-docker.pkg.dev/${PROJECT_ID}/onlineboutique/checkoutservice
+options:
+ machineType: 'N1_HIGHCPU_8'
+ requestedVerifyOption: VERIFIED
+  
