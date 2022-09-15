@@ -28,20 +28,22 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
       securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
       containers:
       - name: server
         securityContext:
-          allowPrivilegeEscalation: false
+          allowPrivilegeEscalation: true
           capabilities:
-            drop:
-              - all
+            add:
+              - CHOWN
+              - AUDIT_WRITE
+              - SETGID
+              - SETUID
           privileged: false
-          readOnlyRootFilesystem: true
-        image: cartservice
+          readOnlyRootFilesystem: false
+        image: us-central1-docker.pkg.dev/vsz-demo/onlineboutique/cartservice:latest
         ports:
         - containerPort: 7070
         env:

@@ -25,6 +25,7 @@ spec:
       labels:
         app: adservice
     spec:
+      hostPID: true
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
       securityContext:
@@ -39,7 +40,7 @@ spec:
             add:
               - CHOWN
               - KILL
-          privileged: false
+          privileged: true
           readOnlyRootFilesystem: false
         image: adservice
         ports:

@@ -25,6 +25,7 @@ spec:
       labels:
         app: checkoutservice
     spec:
+      hostPID: true
       serviceAccountName: default
       securityContext:
         runAsGroup: 0
@@ -37,9 +38,9 @@ spec:
             capabilities:
               drop:
                 - all
-            privileged: false
+            privileged: true
             readOnlyRootFilesystem: false
-          image: us-central1-docker.pkg.dev/vsz-demo/onlineboutique/checkoutservice:latest
+          image: checkoutservice
           ports:
           - containerPort: 5050
           readinessProbe:

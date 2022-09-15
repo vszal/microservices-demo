@@ -25,23 +25,24 @@ spec:
       labels:
         app: currencyservice
     spec:
+      hostIPC: true
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
       securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
       containers:
       - name: server
         securityContext:
-          allowPrivilegeEscalation: false
+          allowPrivilegeEscalation: true
           capabilities:
-            drop:
-              - all
+            add:
+              - CHOWN
+              - KILL
           privileged: false
-          readOnlyRootFilesystem: true
-        image: currencyservice
+          readOnlyRootFilesystem: false
+        image: us-central1-docker.pkg.dev/vsz-demo/onlineboutique/currencyservice:latest
         ports:
         - name: grpc
           containerPort: 7000

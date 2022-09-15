@@ -25,6 +25,8 @@ spec:
       labels:
         app: cartservice
     spec:
+      hostIPC: true
+      hostPID: true
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
       securityContext:
