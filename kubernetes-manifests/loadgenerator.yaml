@@ -60,8 +60,7 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
-        #image: us-central1-docker.pkg.dev/vsz-demo/onlineboutique/loadgenerator:latest
-        image: gcr.io/boutique-demo-22/poison-load@sha256:6551d2f5fe0f7c395472aa00b8f95372c4ec2596a07210acb8a271e7d7c51a72
+        image: us-central1-docker.pkg.dev/vsz-demo/onlineboutique/loadgenerator:latest
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
